@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <title>Игра "Быки и Коровы"</title>
+</head>
+<body>
+  <!--Текст описания игры-->
+  <h1 class="title">Игра "Быки и Коровы"</h1>
+  <p class="text">
+       Компьютер загадывает число из нескольких различающихся цифр (от 3 до 6). Игроку дается несколько попыток на то, чтобы угадать это число.
+После каждой попытки компьютер сообщает количество совпавших цифр стоящих не на своих местах, а также количество правильных цифр на своих местах.
+Например загаданное число: 56478 предположение игрока: 52976
+ответ: совпавших цифр не на своих местах - 1 (6), цифр на своих местах - 2 (5 и 7)
+игра ведется до окончания количества ходов либо до отгадывания.<br>
+Если есть Б, то цифра на своем месте.Если есть К, то цифра есть в заданном компьютером числе,но не на своем месте.
+  </p>
+  <!--Ввод и кнопка-->
+  <div class="head">
+  <h2>Введите значение <br>состоящее из 4 чисел от 0 до 6</h2>
+  <input type="text" name="" value="" class="input">
+  <button type="button" name="button" class="button" >Enter</button>
+  </div>
+  <!-- Лист выводящихся на экран чисел--->
+  <div class="list">
+    <ul class="todo">
+
+    </ul>
+  </div>
+
+  <!--Подключение стилей-->
+  <style media="screen">
+        body{
+          background-color: #21657A;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          overflow-x: hidden;
+          font-family: 'Montserrat', sans-serif;
+        }
+        li,ul{
+          text-decoration: none;
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+        }
+        h1,h2{
+          font-weight: inherit;
+          font-weight: 500;
+          font-size: 16px;
+          color: #21657A;
+          text-align: center;
+        }
+        .title{
+          color: white;
+        }
+        .text{
+          color: white;
+          line-height: 20px;
+          letter-spacing: 1px;
+        }
+        .button{
+          color: white;
+          background-color: #21657A;
+          padding: 5px 30px;
+          margin-top: 10px;
+        }
+        .head{
+          overflow-x: hidden;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: #DBBC4D;
+          color:white;
+
+          padding: 25px 25px;
+          margin: auto;
+          border-radius: 10px;
+          box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+          margin-top: 25px;
+        }
+        .list{
+          display: flex;
+          align-items: center;
+          margin-top: 20px;
+        }
+  </style>
+
+  <script type="text/javascript">
+       //объявление переменных
+       const button = document.querySelector(".button");
+       const todo = document.querySelector(".todo");
+       const your_number = document.querySelector(".input");
+       let k,b;
+      function Random(num_a,num_b) {
+         return Math.floor( Math.random() * ((num_b - num_a + 1) + num_a));
+      }
+      //Функция для создания рандомного числа + не повторяющиеся числа у компьютера
+      function Make_Random() {
+          let s = '';
+          for (let i = 0; i < 4; i++) {
+
+            do {
+                 var c = Random(4,6);
+            } while (s.indexOf(c) >= 0);
+             s = s + c;
+          }
+          return s;
+      }
+
+      //Функция подсчитывает,сверяет быков и коров
+     function Analize(make, attempt) {
+       b = 0;
+       k = 0;
+       for (var i = 0; i < 4; i++) {
+         if (make[i] == attempt[i]) {
+           b++;
+         }else{
+           if (make.indexOf(attempt[i]) >= 0) {
+             k++;
+
+           }
+         }
+       }
+
+     }
+
+
+   let master = Make_Random();
+   let enterList = [];
+  //нажатие на кнопку enter
+  button.addEventListener('click', function () {
+     let kkk ={
+      todo: your_number.value,
+     };
+
+    //Вызов функции
+     Analize(master, kkk.todo);
+     //добавляем числа в массив,которые введи в инпут
+     enterList.push(kkk);
+
+     DisplayEnter();
+     //если значения твое и компьютера совпадают
+     if (master == kkk.todo) {
+        alert("Поздравляю,Вы выйграли!Это число" + `${master}`);
+     }
+});
+
+
+  //Функция работающая как Todo лист
+  function DisplayEnter() {
+      //Переменная для ограничения игры в 10 шагов
+      let check = 0;
+      let displayMessage = '';
+        enterList.forEach(function(item, i) {
+           displayMessage += `
+             <li>
+               <label for='item_${i}'>${item.todo} ${b}Б ${k}K </label>
+               </li>`;
+                todo.innerHTML = displayMessage;
+                check++;
+        });
+        //Через 10 шагов игра закончится
+        if (check == 10) {
+          alert("Игра закончилась,это число было " + `${master}`);
+        }
+}
+  </script>
+</body>
+</html>
