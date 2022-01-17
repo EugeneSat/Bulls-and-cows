@@ -71,8 +71,7 @@ let check = 0;
 let displayMessage = '';
 
  enterList.forEach(function(item, i) {
-    b = b.replace(item, i);
-    k = k.replace();
+    
     displayMessage += `
       <li>
         <label for='item_${i}'>${item.todo} ${b}Б ${k}K</label>
