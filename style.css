@@ -34,6 +34,8 @@ h1,h2{
   background-color: #21657A;
   padding: 5px 30px;
   margin-top: 10px;
+  border-radius: 15px;
+  border-color:  #21657A;
 }
 .head{
   overflow-x: hidden;
@@ -53,4 +55,18 @@ h1,h2{
   display: flex;
   align-items: center;
   margin-top: 20px;
+}
+.input{
+  border-radius: 5px;
+  padding: 10px 5px;
+  border-color: #DBBC4D;
+}
+
+.input2{
+   outline-color: #21657A;
+}
+.but2{
+  background-color: black;
+  padding: 5px 5px;
+  border-radius: 5px;
 }
